@@ -9,6 +9,6 @@ export const DEFAULT_QR_CODE_OPTIONS: Partial<Options> = {
     type: "square",
   },
   backgroundOptions: {
-    color: "#FFFFFF",
+    color: "#FFFFFF00",
   },
 };

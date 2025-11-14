@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 50 50">
+    <defs>
+        <clipPath id="clip-path-dot-color-57">
+            <circle cx="25.5" cy="25.5" r="10.5" />
+        </clipPath>
+    </defs>
+    <rect x="0" y="0" height="50" width="50" clip-path="url('#clip-path-dot-color-57')" fill="#000000" />
+</svg>
