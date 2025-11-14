@@ -77,7 +77,6 @@ export function QRCodeRenderer({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log("Key down event:", e.key, e.metaKey, e.ctrlKey);
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
         downloadQrCodeDefault();
       }
@@ -91,61 +90,63 @@ export function QRCodeRenderer({
   }, [downloadQrCodeDefault]);
 
   return (
-    <div className={cn("flex flex-col items-center gap-2 p-6", className)}>
-      <div>
-        {!options.data && (
-          <Image
-            src={QRCodePlaceholder}
-            alt="QR Code Placeholder"
-            className="w-[150px] h-[150px]"
-          />
-        )}
-        <div ref={ref} />
+    <div className={cn("inline-flex justify-center", className)}>
+      <div className="flex flex-col gap-2">
+        <div className="checkered-background p-4 rounded-md aspect-square flex items-center justify-center">
+          {!options.data && (
+            <Image
+              src={QRCodePlaceholder}
+              alt="QR Code Placeholder"
+              className="w-[150px] h-[150px]"
+            />
+          )}
+          <div ref={ref} />
+        </div>
+        <ButtonGroup className="w-full">
+          <Button onClick={downloadQrCodeDefault} disabled={!options.data}>
+            <PlatformRenderer>
+              {({ platform }) => platform === "mobile" && <DownloadIcon />}
+            </PlatformRenderer>
+            Download
+            <PlatformRenderer>
+              {({ platform }) =>
+                platform !== "mobile" && (
+                  <KbdGroup>
+                    <Kbd>{platform === "macos" ? "⌘" : "Ctrl"}</Kbd>
+                    <Kbd>⏎</Kbd>
+                  </KbdGroup>
+                )
+              }
+            </PlatformRenderer>
+          </Button>
+          <ButtonGroupSeparator />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button disabled={!options.data}>
+                {extension.toUpperCase()} <ChevronDownIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="[--radius:1rem]">
+              <DropdownMenuLabel>File Type</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {extensionOptions.map((ext) => (
+                <DropdownMenuCheckboxItem
+                  key={ext}
+                  checked={ext === extension}
+                  onCheckedChange={() => {
+                    if (extensionOptions.includes(ext)) {
+                      setExtension(ext);
+                      downloadQrCode(ext);
+                    }
+                  }}
+                >
+                  {ext.toUpperCase()}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </ButtonGroup>
       </div>
-      <ButtonGroup>
-        <Button onClick={downloadQrCodeDefault} disabled={!options.data}>
-          <PlatformRenderer>
-            {({ platform }) => platform === "mobile" && <DownloadIcon />}
-          </PlatformRenderer>
-          Download
-          <PlatformRenderer>
-            {({ platform }) =>
-              platform !== "mobile" && (
-                <KbdGroup>
-                  <Kbd>{platform === "macos" ? "⌘" : "Ctrl"}</Kbd>
-                  <Kbd>⏎</Kbd>
-                </KbdGroup>
-              )
-            }
-          </PlatformRenderer>
-        </Button>
-        <ButtonGroupSeparator />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button disabled={!options.data}>
-              {extension.toUpperCase()} <ChevronDownIcon />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="[--radius:1rem]">
-            <DropdownMenuLabel>File Type</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {extensionOptions.map((ext) => (
-              <DropdownMenuCheckboxItem
-                key={ext}
-                checked={ext === extension}
-                onCheckedChange={() => {
-                  if (extensionOptions.includes(ext)) {
-                    setExtension(ext);
-                    downloadQrCode(ext);
-                  }
-                }}
-              >
-                {ext.toUpperCase()}
-              </DropdownMenuCheckboxItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </ButtonGroup>
     </div>
   );
 }

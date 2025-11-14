@@ -120,3 +120,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.checkered-background {
+  background-image: repeating-conic-gradient(
+    oklch(0.922 0 0) 0% 25%,
+    oklch(1 0 0) 0% 50%
+  );
+  background-size: 16px 16px;
+}
