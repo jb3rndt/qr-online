@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import QRCodeStyling, { FileExtension, Options } from "qr-code-styling";
 import { Button } from "./ui/button";
 import { ChevronDownIcon, DownloadIcon } from "lucide-react";
@@ -24,6 +19,7 @@ import QRCodePlaceholder from "@/public/qr-code-placeholder.svg";
 import { cn, getPlatform } from "@/lib/utils";
 import { Platform } from "@/lib/types";
 import dynamic from "next/dynamic";
+import { toast } from "sonner";
 
 const PlatformRenderer = dynamic(() => import("./PlatformRenderer"), {
   ssr: false,
@@ -58,7 +54,12 @@ export function QRCodeRenderer({
 
   const downloadQrCode = useCallback(
     (ext: FileExtension) => {
-      if (!qrCode?._qr) return;
+      if (!qrCode?._qr) {
+        toast.warning(
+          "Please enter data to generate the QR code before downloading."
+        );
+        return;
+      }
       qrCode?.download({ extension: ext });
     },
     [qrCode]
