@@ -1,9 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import QRCodeStyling, { FileExtension, Options } from "qr-code-styling";
-import { Button } from "./ui/button";
+import { DEFAULT_DATA_STRING } from "@/lib/constants";
+import { Platform } from "@/lib/types";
+import { cn, getPlatform } from "@/lib/utils";
 import { ChevronDownIcon, DownloadIcon } from "lucide-react";
+import dynamic from "next/dynamic";
+import QRCodeStyling, { FileExtension, Options } from "qr-code-styling";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "./ui/button";
+import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,14 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
 import { Kbd, KbdGroup } from "./ui/kbd";
-import Image from "next/image";
-import QRCodePlaceholder from "@/public/qr-code-placeholder.svg";
-import { cn, getPlatform } from "@/lib/utils";
-import { Platform } from "@/lib/types";
-import dynamic from "next/dynamic";
-import { toast } from "sonner";
 
 const PlatformRenderer = dynamic(() => import("./PlatformRenderer"), {
   ssr: false,
@@ -38,9 +37,13 @@ export function QRCodeRenderer({
   const [extension, setExtension] = useState<FileExtension>("svg");
   const extensionOptions: FileExtension[] = ["svg", "png", "jpeg", "webp"];
   const [platform, setPlatform] = useState<Platform>();
+  const optionsWithDefaults: Options = {
+    ...options,
+    data: options.data || DEFAULT_DATA_STRING,
+  };
 
   if (typeof window !== "undefined" && !qrCode) {
-    setQrCode(new QRCodeStyling(options));
+    setQrCode(new QRCodeStyling(optionsWithDefaults));
   }
 
   if (typeof navigator !== "undefined" && !platform) {
@@ -49,7 +52,7 @@ export function QRCodeRenderer({
 
   if (prevOptions !== options) {
     setPrevOptions(options);
-    qrCode?.update(options);
+    qrCode?.update(optionsWithDefaults);
   }
 
   const downloadQrCode = useCallback(
@@ -91,19 +94,18 @@ export function QRCodeRenderer({
 
   return (
     <div className={cn("inline-flex justify-center", className)}>
-      <div className="flex flex-col gap-2">
-        <div className="checkered-background p-4 rounded-md aspect-square flex items-center justify-center">
-          {!options.data && (
-            <Image
-              src={QRCodePlaceholder}
-              alt="QR Code Placeholder"
-              className="w-[150px] h-[150px]"
-            />
-          )}
-          <div ref={ref} />
+      <div className="flex flex-col gap-6">
+        <div className="p-4 bg-accent inset-shadow-sm rounded-md">
+          <div className="checkered-background aspect-square flex items-center justify-center">
+            <div ref={ref} className={cn(!options.data && "opacity-50")} />
+          </div>
         </div>
         <ButtonGroup className="w-full">
-          <Button onClick={downloadQrCodeDefault} disabled={!options.data}>
+          <Button
+            onClick={downloadQrCodeDefault}
+            disabled={!options.data}
+            className="grow"
+          >
             <PlatformRenderer>
               {({ platform }) => platform === "mobile" && <DownloadIcon />}
             </PlatformRenderer>
@@ -127,7 +129,7 @@ export function QRCodeRenderer({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="[--radius:1rem]">
-              <DropdownMenuLabel>File Type</DropdownMenuLabel>
+              <DropdownMenuLabel>Download as</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {extensionOptions.map((ext) => (
                 <DropdownMenuCheckboxItem
