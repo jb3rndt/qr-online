@@ -231,8 +231,7 @@ export function QRCodeDataInputCard({
               {type.InputForm}
               {warn && (
                 <div className="flex items-center text-amber-400 text-sm gap-2">
-                  <TriangleAlert size={16} /> Enter data for changes to take
-                  effect
+                  <TriangleAlert size={16} /> Enter your own data here
                 </div>
               )}
             </CardContent>

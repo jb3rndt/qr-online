@@ -1,4 +1,4 @@
-import { ColorPicker } from "../ColorPicker";
+import { ColorPickerInput } from "../ColorPicker";
 
 export function ColorInputForm({
   foregroundColor,
@@ -13,12 +13,12 @@ export function ColorInputForm({
 }) {
   return (
     <div className="space-y-2">
-      <ColorPicker
+      <ColorPickerInput
         label="Foreground Color"
         value={foregroundColor}
         onChange={(color) => onForegroundColorChange?.(color)}
       />
-      <ColorPicker
+      <ColorPickerInput
         label="Background Color"
         value={backgroundColor}
         onChange={(color) => onBackgroundColorChange?.(color)}

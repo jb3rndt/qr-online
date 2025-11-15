@@ -5,7 +5,7 @@ export const DEFAULT_QR_CODE_OPTIONS: Partial<Options> = {
   height: 150,
   type: "svg",
   dotsOptions: {
-    color: "#000000",
+    color: "#000000FF",
     type: "square",
   },
   backgroundOptions: {
