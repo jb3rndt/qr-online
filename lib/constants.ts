@@ -3,6 +3,7 @@ import { Options } from "qr-code-styling";
 export const DEFAULT_QR_CODE_OPTIONS: Partial<Options> = {
   width: 300,
   height: 300,
+  margin: 0,
   type: "svg",
   imageOptions: {
     imageSize: 0.4,

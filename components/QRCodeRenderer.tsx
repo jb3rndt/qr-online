@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
+import { Card, CardContent } from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -40,6 +41,10 @@ export function QRCodeRenderer({
   const optionsWithDefaults: Options = {
     ...options,
     data: options.data || DEFAULT_DATA_STRING,
+    imageOptions: {
+      ...options.imageOptions,
+      margin: options.imageOptions?.margin ?? 0,
+    },
   };
 
   if (typeof window !== "undefined" && !qrCode) {
@@ -93,11 +98,17 @@ export function QRCodeRenderer({
   }, [downloadQrCodeDefault]);
 
   return (
-    <div className={cn("inline-flex justify-center", className)}>
-      <div className="flex flex-col gap-6">
+    <Card className={className}>
+      <CardContent className="space-y-6">
         <div className="p-4 bg-accent inset-shadow-sm rounded-md">
-          <div className="checkered-background aspect-square flex items-center justify-center">
-            <div ref={ref} className={cn(!options.data && "opacity-50")} />
+          <div className="aspect-square flex items-center justify-center w-[300px] h-[300px]">
+            <div
+              ref={ref}
+              className={cn(
+                !options.data && "[&_svg]:opacity-50",
+                "[&_svg]:h-full [&_canvas]:w-full [&_svg]:max-w-[300px] child-checkered-background"
+              )}
+            />
           </div>
         </div>
         <ButtonGroup className="w-full">
@@ -114,8 +125,12 @@ export function QRCodeRenderer({
               {({ platform }) =>
                 platform !== "mobile" && (
                   <KbdGroup>
-                    <Kbd>{platform === "macos" ? "⌘" : "Ctrl"}</Kbd>
-                    <Kbd>⏎</Kbd>
+                    <Kbd className="bg-muted-foreground/50 text-foreground-primary">
+                      {platform === "macos" ? "⌘" : "Ctrl"}
+                    </Kbd>
+                    <Kbd className="bg-muted-foreground/50 text-foreground-primary text-sm">
+                      ⏎
+                    </Kbd>
                   </KbdGroup>
                 )
               }
@@ -148,7 +163,7 @@ export function QRCodeRenderer({
             </DropdownMenuContent>
           </DropdownMenu>
         </ButtonGroup>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

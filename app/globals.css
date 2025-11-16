@@ -121,6 +121,7 @@
   }
 }
 
+.child-checkered-background > *,
 .checkered-background {
   background-image: repeating-conic-gradient(
     oklch(0.922 0 0) 0% 25%,
