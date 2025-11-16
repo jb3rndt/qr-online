@@ -40,8 +40,8 @@ export function ImageInputForm({
         {image && (
           <Button
             onClick={onImageRemove}
-            variant={"secondary"}
-            size={"sm"}
+            variant="secondary"
+            size="sm"
             className="ml-2 hover:bg-destructive hover:text-background"
           >
             <Trash size={14} />
@@ -78,7 +78,7 @@ export function ImageInputForm({
               </div>
               <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                 <div className="p-2 rounded-md bg-muted">
-                  <EditIcon size={32}></EditIcon>
+                  <EditIcon size={32} />
                 </div>
               </div>
             </>
@@ -111,7 +111,7 @@ export function ImageInputForm({
         <div className="grid w-full items-center gap-3">
           <Label htmlFor="image-margin">Image Margin</Label>
           <NumberInput
-            id={"image-margin"}
+            id="image-margin"
             className="w-20"
             value={margin}
             onChange={(value) => {

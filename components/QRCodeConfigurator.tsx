@@ -49,7 +49,7 @@ export function QRCodeConfigurator({
           })
         }
         warn={warnNoData}
-      ></QRCodeDataInputCard>
+      />
 
       <Card>
         <CardHeader>
@@ -81,7 +81,7 @@ export function QRCodeConfigurator({
           <div className="grid w-full items-center gap-3">
             <Label htmlFor="margin">Margin</Label>
             <NumberInput
-              id={"margin"}
+              id="margin"
               className="w-20"
               value={config.margin}
               onChange={(value) => {
@@ -95,7 +95,7 @@ export function QRCodeConfigurator({
             <div className="grid w-full items-center gap-3">
               <Label htmlFor="width">Width</Label>
               <NumberInput
-                id={"width"}
+                id="width"
                 className="w-20"
                 value={config.width}
                 onChange={(value) => {
@@ -108,7 +108,7 @@ export function QRCodeConfigurator({
             <div className="grid w-full items-center gap-3">
               <Label htmlFor="height">Height</Label>
               <NumberInput
-                id={"height"}
+                id="height"
                 className="w-20"
                 value={config.height}
                 onChange={(value) => {

@@ -35,7 +35,7 @@ export function ColorPickerInput({
               <div
                 className="h-12 w-12 -m-0.5 rounded-md"
                 style={{ backgroundColor: value }}
-              ></div>
+              />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-96 p-0">
@@ -55,7 +55,7 @@ export function ColorPickerInput({
                   <div
                     className="h-10 w-10 -m-0.5 rounded-md"
                     style={{ backgroundColor: value }}
-                  ></div>
+                  />
                 </div>
                 <div className="grid w-full gap-1">
                   <ColorPickerHue />

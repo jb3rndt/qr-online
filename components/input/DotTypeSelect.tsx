@@ -83,7 +83,7 @@ export function CornerSquareTypeSelect({
       }
     >
       <ToggleGroupItem
-        value={"none"}
+        value="none"
         className="w-12 h-12 px-1.5 data-[state=off]:opacity-50 data-[state=off]:hover:opacity-65"
       >
         <Slash />
@@ -120,7 +120,7 @@ export function CornerDotTypeSelect({
       }
     >
       <ToggleGroupItem
-        value={"none"}
+        value="none"
         className="w-12 h-12 px-1.5 data-[state=off]:opacity-50 data-[state=off]:hover:opacity-65"
       >
         <Slash />

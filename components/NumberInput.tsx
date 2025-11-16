@@ -49,7 +49,7 @@ export function NumberInput({
   return (
     <ButtonGroup>
       <Button
-        variant={"outline"}
+        variant="outline"
         className="aspect-square"
         onClick={handleDecrement}
         disabled={min !== undefined && value !== undefined && value <= min}
@@ -74,7 +74,7 @@ export function NumberInput({
         />
       </InputGroup>
       <Button
-        variant={"outline"}
+        variant="outline"
         className="aspect-square"
         onClick={handleIncrement}
         disabled={max !== undefined && value !== undefined && value >= max}
