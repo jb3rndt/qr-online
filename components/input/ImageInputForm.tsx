@@ -1,7 +1,10 @@
 import { EditIcon, Trash } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { SliderControl } from "../SliderControl";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
   Dropzone,
@@ -11,17 +14,29 @@ import {
 
 export function ImageInputForm({
   image,
+  imageSize,
+  margin,
+  hideBackgroundDots,
   onImageUpload,
   onImageRemove,
+  onImageSizeChange,
+  onMarginChange,
+  onHideBackgroundDotsChange,
 }: {
   image?: string;
+  imageSize: number;
+  margin?: number;
+  hideBackgroundDots: boolean;
   onImageUpload?: (file: File) => void;
   onImageRemove?: () => void;
+  onImageSizeChange?: (size: number) => void;
+  onMarginChange?: (margin?: number) => void;
+  onHideBackgroundDotsChange?: (hide: boolean) => void;
 }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex justify-between">
-        <Label>Upload Logo</Label>
+        <Label>Upload Image</Label>
         {image && (
           <Button
             onClick={onImageRemove}
@@ -70,6 +85,44 @@ export function ImageInputForm({
           )}
         </DropzoneContent>
       </Dropzone>
+      {image && (
+        <SliderControl
+          label="Image Size"
+          value={imageSize}
+          onChange={(value) => onImageSizeChange?.(value)}
+          min={0.1}
+          max={1}
+          step={0.1}
+        />
+      )}
+      {image && (
+        <div className="flex items-center gap-3">
+          <Checkbox
+            id="hideBackgroundDots"
+            checked={hideBackgroundDots}
+            onCheckedChange={(checked) =>
+              onHideBackgroundDotsChange?.(checked === true ? true : false)
+            }
+          />
+          <Label htmlFor="hideBackgroundDots">Hide QR Dots behind Image</Label>
+        </div>
+      )}
+      {image && (
+        <div className="grid w-full max-w-sm items-center gap-3">
+          <Label htmlFor="image-margin">Image Margin</Label>
+          <Input
+            id={"image-margin"}
+            type="number"
+            value={margin ?? ""}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              onMarginChange?.(isNaN(value) ? undefined : value);
+            }}
+            min={0}
+            step={1}
+          />
+        </div>
+      )}
     </div>
   );
 }

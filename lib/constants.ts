@@ -4,6 +4,11 @@ export const DEFAULT_QR_CODE_OPTIONS: Partial<Options> = {
   width: 300,
   height: 300,
   type: "svg",
+  imageOptions: {
+    imageSize: 0.4,
+    margin: 7,
+    hideBackgroundDots: true,
+  },
   dotsOptions: {
     color: "#000000FF",
     type: "square",
