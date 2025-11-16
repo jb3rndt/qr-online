@@ -1,10 +1,10 @@
 import { EditIcon, Trash } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { NumberInput } from "../NumberInput";
 import { SliderControl } from "../SliderControl";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
   Dropzone,
@@ -108,15 +108,14 @@ export function ImageInputForm({
         </div>
       )}
       {image && (
-        <div className="grid w-full max-w-sm items-center gap-3">
+        <div className="grid w-full items-center gap-3">
           <Label htmlFor="image-margin">Image Margin</Label>
-          <Input
+          <NumberInput
             id={"image-margin"}
-            type="number"
-            value={margin ?? ""}
-            onChange={(e) => {
-              const value = parseInt(e.target.value);
-              onMarginChange?.(isNaN(value) ? undefined : value);
+            className="w-20"
+            value={margin}
+            onChange={(value) => {
+              onMarginChange?.(value);
             }}
             min={0}
             step={1}
