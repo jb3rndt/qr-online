@@ -14,7 +14,10 @@ export function QRCodeContainer() {
   return (
     <div className="flex flex-col md:flex-row gap-10 items-start justify-center p-4 md:p-10">
       <QRCodeConfigurator config={options} onConfigChange={setOptions} />
-      <QRCodeRenderer options={options} className="sticky top-10" />
+      <QRCodeRenderer
+        options={options}
+        className="sticky top-[calc(var(--nav-height)+2.5rem)]"
+      />
     </div>
   );
 }
