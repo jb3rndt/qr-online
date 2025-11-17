@@ -1,29 +1,12 @@
 "use client";
 
 import { DEFAULT_DATA_STRING } from "@/lib/constants";
-import { Platform } from "@/lib/types";
-import { cn, getPlatform } from "@/lib/utils";
-import { ChevronDownIcon, DownloadIcon } from "lucide-react";
-import dynamic from "next/dynamic";
+import { cn } from "@/lib/utils";
 import QRCodeStyling, { FileExtension, Options } from "qr-code-styling";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
-import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
+import { QRCodeDownloadButton } from "./QRCodeDownloadButton";
 import { Card, CardContent } from "./ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Kbd, KbdGroup } from "./ui/kbd";
-
-const PlatformRenderer = dynamic(() => import("./PlatformRenderer"), {
-  ssr: false,
-});
 
 export function QRCodeRenderer({
   options,
@@ -35,9 +18,6 @@ export function QRCodeRenderer({
   const ref = useRef<HTMLDivElement>(null);
   const [qrCode, setQrCode] = useState<QRCodeStyling>();
   const [prevOptions, setPrevOptions] = useState<Partial<Options>>(options);
-  const [extension, setExtension] = useState<FileExtension>("svg");
-  const extensionOptions: FileExtension[] = ["svg", "png", "jpeg", "webp"];
-  const [platform, setPlatform] = useState<Platform>();
   const optionsWithDefaults: Options = {
     ...options,
     data: options.data || DEFAULT_DATA_STRING,
@@ -49,10 +29,6 @@ export function QRCodeRenderer({
 
   if (typeof window !== "undefined" && !qrCode) {
     setQrCode(new QRCodeStyling(optionsWithDefaults));
-  }
-
-  if (typeof navigator !== "undefined" && !platform) {
-    setPlatform(getPlatform(navigator.userAgent));
   }
 
   if (prevOptions !== options) {
@@ -73,96 +49,32 @@ export function QRCodeRenderer({
     [qrCode]
   );
 
-  const downloadQrCodeDefault = useCallback(() => {
-    downloadQrCode(extension);
-  }, [extension, downloadQrCode]);
-
   useEffect(() => {
     if (ref.current) {
       qrCode?.append(ref.current);
     }
   }, [qrCode, ref]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-        downloadQrCodeDefault();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [downloadQrCodeDefault]);
-
   return (
-    <Card className={className}>
-      <CardContent className="space-y-6">
+    <Card className={cn("max-md:p-2 max-md:w-full", className)}>
+      <CardContent className="md:gap-6 gap-2 flex md:flex-col items-center max-md:p-0 max-md:justify-between">
         <div className="p-4 bg-accent inset-shadow-sm rounded-md">
-          <div className="aspect-square flex items-center justify-center w-[300px] h-[300px]">
+          <div className="aspect-square flex items-center justify-center md:size-[300px] size-20">
             <div
               ref={ref}
               className={cn(
                 !options.data && "[&_svg]:opacity-50",
-                "[&_svg]:h-full [&_canvas]:w-full [&_svg]:max-w-[300px] child-checkered-background"
+                "[&_svg]:h-full md:[&_svg]:max-w-[300px] [&_svg]:max-w-20 child-checkered-background"
               )}
             />
           </div>
         </div>
-        <ButtonGroup className="w-full">
-          <Button
-            onClick={downloadQrCodeDefault}
-            disabled={!options.data}
-            className="grow"
-          >
-            <PlatformRenderer>
-              {({ platform }) => platform === "mobile" && <DownloadIcon />}
-            </PlatformRenderer>
-            Download
-            <PlatformRenderer>
-              {({ platform }) =>
-                platform !== "mobile" && (
-                  <KbdGroup>
-                    <Kbd className="bg-muted-foreground/50 text-foreground-primary">
-                      {platform === "macos" ? "⌘" : "Ctrl"}
-                    </Kbd>
-                    <Kbd className="bg-muted-foreground/50 text-foreground-primary text-sm">
-                      ⏎
-                    </Kbd>
-                  </KbdGroup>
-                )
-              }
-            </PlatformRenderer>
-          </Button>
-          <ButtonGroupSeparator />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button disabled={!options.data}>
-                {extension.toUpperCase()} <ChevronDownIcon />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="[--radius:1rem]">
-              <DropdownMenuLabel>Download as</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {extensionOptions.map((ext) => (
-                <DropdownMenuCheckboxItem
-                  key={ext}
-                  checked={ext === extension}
-                  onCheckedChange={() => {
-                    if (extensionOptions.includes(ext)) {
-                      setExtension(ext);
-                      downloadQrCode(ext);
-                    }
-                  }}
-                >
-                  {ext.toUpperCase()}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </ButtonGroup>
+        <QRCodeDownloadButton
+          className="max-xs:w-full md:w-full"
+          orientation="responsive-xs"
+          onDownload={downloadQrCode}
+          disabled={!options.data}
+        />
       </CardContent>
     </Card>
   );

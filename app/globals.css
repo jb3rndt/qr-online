@@ -43,6 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --nav-height: 4rem;
+  --breakpoint-xs: 30rem;
 }
 
 :root {
