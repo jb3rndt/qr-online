@@ -50,6 +50,7 @@ export function DotTypeSelect({
       onValueChange={(value) =>
         value ? onChange(value as DotType) : undefined
       }
+      className="flex-wrap"
     >
       {DOT_TYPES.map((option) => (
         <ToggleGroupItem

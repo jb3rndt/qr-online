@@ -4,7 +4,7 @@ export const DEFAULT_QR_CODE_OPTIONS: Partial<Options> = {
   width: 300,
   height: 300,
   margin: 0,
-  type: "svg",
+  type: "canvas",
   imageOptions: {
     imageSize: 0.4,
     margin: 7,

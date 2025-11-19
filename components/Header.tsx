@@ -5,7 +5,7 @@ import { GitHubLogo } from "./svg/GitHubLogo";
 export function Header({ className }: { className?: string }) {
   return (
     <header className={cn("backdrop-blur-md bg-background/80", className)}>
-      <div className="flex container mx-auto h-full items-center justify-between">
+      <div className="flex container mx-auto h-full items-center justify-between px-4">
         <h2 className="font-bold text-lg">QRCode Generator</h2>
         <div>
           <Link

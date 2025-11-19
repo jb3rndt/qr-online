@@ -11,11 +11,15 @@ import { Card, CardContent } from "./ui/card";
 export function QRCodeRenderer({
   options,
   className,
+  ref,
+  shrinked,
 }: {
   options: Partial<Options>;
   className?: string;
+  ref?: React.RefObject<HTMLDivElement | null>;
+  shrinked?: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const qrCodeRef = useRef<HTMLDivElement>(null);
   const [qrCode, setQrCode] = useState<QRCodeStyling>();
   const [prevOptions, setPrevOptions] = useState<Partial<Options>>(options);
   const optionsWithDefaults: Options = {
@@ -50,27 +54,39 @@ export function QRCodeRenderer({
   );
 
   useEffect(() => {
-    if (ref.current) {
-      qrCode?.append(ref.current);
+    if (qrCodeRef.current) {
+      qrCode?.append(qrCodeRef.current);
     }
-  }, [qrCode, ref]);
+  }, [qrCode, qrCodeRef]);
 
   return (
-    <Card className={cn("max-md:p-2 max-md:w-full", className)}>
-      <CardContent className="md:gap-6 gap-2 flex md:flex-col items-center max-md:p-0 max-md:justify-between">
+    <Card
+      className={cn(
+        "data-[shrinked=true]:w-full data-[shrinked=true]:rounded-none group data-[shrinked=true]:backdrop-blur-md data-[shrinked=true]:bg-background/80",
+        className
+      )}
+      ref={ref}
+      data-shrinked={shrinked}
+    >
+      <CardContent
+        className={cn(
+          "gap-6 group-data-[shrinked=true]:gap-2 flex not-group-data-[shrinked=true]:flex-col items-center group-data-[shrinked=true]:justify-center"
+        )}
+      >
         <div className="p-4 bg-accent inset-shadow-sm rounded-md">
-          <div className="aspect-square flex items-center justify-center md:size-[300px] size-20">
+          <div className="aspect-square flex items-center justify-center xs:size-[300px] size-[200px] group-data-[shrinked=true]:size-20">
             <div
-              ref={ref}
+              ref={qrCodeRef}
               className={cn(
-                !options.data && "[&_svg]:opacity-50",
-                "[&_svg]:h-full md:[&_svg]:max-w-[300px] [&_svg]:max-w-20 child-checkered-background"
+                !options.data && "[&_canvas]:opacity-50",
+                "child-checkered-background flex items-center justify-center w-full h-full",
+                "[&_canvas]:max-w-full [&_canvas]:max-h-full [&_canvas]:mx-auto"
               )}
             />
           </div>
         </div>
         <QRCodeDownloadButton
-          className="max-xs:w-full md:w-full"
+          className="max-xs:w-full group-not-data-shrinked:w-full"
           orientation="responsive-xs"
           onDownload={downloadQrCode}
           disabled={!options.data}

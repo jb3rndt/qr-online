@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Options } from "qr-code-styling";
 import { useState } from "react";
 import { ColorInputForm } from "./input/ColorInputForm";
@@ -17,9 +18,11 @@ import { Label } from "./ui/label";
 export function QRCodeConfigurator({
   config,
   onConfigChange,
+  className,
 }: {
   config: Partial<Options>;
   onConfigChange: (config: Partial<Options>) => void;
+  className?: string;
 }) {
   const [warnNoData, setWarnNoData] = useState(false);
 
@@ -41,7 +44,7 @@ export function QRCodeConfigurator({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className={cn("flex flex-col gap-8", className)}>
       <QRCodeDataInputCard
         onDataChange={(data) =>
           handleConfigChange({
@@ -91,8 +94,8 @@ export function QRCodeConfigurator({
               step={1}
             />
           </div>
-          <div className="flex gap-4">
-            <div className="grid w-full items-center gap-3">
+          <div className="flex gap-4 flex-wrap">
+            <div className="grid items-center gap-3">
               <Label htmlFor="width">Width</Label>
               <NumberInput
                 id="width"
@@ -105,7 +108,7 @@ export function QRCodeConfigurator({
                 step={1}
               />
             </div>
-            <div className="grid w-full items-center gap-3">
+            <div className="grid items-center gap-3">
               <Label htmlFor="height">Height</Label>
               <NumberInput
                 id="height"

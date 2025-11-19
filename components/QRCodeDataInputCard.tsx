@@ -217,7 +217,7 @@ export function QRCodeDataInputCard({
       onValueChange={onTabChange}
       className={className}
     >
-      <TabsList>
+      <TabsList className="flex items-center justify-start flex-wrap h-auto space-y-1">
         {Object.entries(DATA_TYPES).map(([key, type]) => (
           <TabsTrigger key={key} value={key}>
             {type.icon} {type.label}
