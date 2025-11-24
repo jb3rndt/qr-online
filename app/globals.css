@@ -44,6 +44,10 @@
 
   --nav-height: 4rem;
   --breakpoint-xs: 30rem;
+
+  --dot-size: 1px; /* diameter of dots */
+  --dot-spacing: 8px; /* distance between dots */
+  --dot-color: rgba(0, 0, 0, 0.15);
 }
 
 :root {
@@ -132,4 +136,12 @@
   );
   background-size: 16px 16px;
   background-position: center center;
+}
+
+.dotted-background {
+  background-image: radial-gradient(
+    var(--dot-color) var(--dot-size),
+    transparent 0
+  );
+  background-size: var(--dot-spacing) var(--dot-spacing);
 }

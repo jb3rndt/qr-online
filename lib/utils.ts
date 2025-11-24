@@ -7,14 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getPlatform(userAgent: string): Platform {
-  if (/Macintosh|Mac OS X/.test(userAgent)) {
+  if (/iPhone|iPad|Android/.test(userAgent)) {
+    return "mobile";
+  } else if (/Macintosh|Mac OS X/.test(userAgent)) {
     return "macos";
   } else if (/Windows/.test(userAgent)) {
     return "windows";
   } else if (/Linux/.test(userAgent)) {
     return "linux";
-  } else if (/iPhone|iPad|Android/.test(userAgent)) {
-    return "mobile";
   } else {
     return "other";
   }

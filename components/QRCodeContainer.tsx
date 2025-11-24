@@ -7,7 +7,7 @@ import { QRCodeConfigurator } from "./QRCodeConfigurator";
 import { QRCodeRenderer } from "./QRCodeRenderer";
 
 const NAV_HEIGHT = 64;
-const SWITCH_THRESHOLD = 146;
+const SWITCH_THRESHOLD = 114;
 
 export function QRCodeContainer() {
   const [options, setOptions] = useState(DEFAULT_QR_CODE_OPTIONS);

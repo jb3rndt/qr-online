@@ -7,6 +7,7 @@ Online QRCode Generator that does not suck
 - ✅ Custom colors
 - ✅ Custom paddings
 - ✅ Custom styles
+- ✅ Local history
 - ❌ No account at any time
 - ❌ No generation limits
 - ❌ No restrictive customization

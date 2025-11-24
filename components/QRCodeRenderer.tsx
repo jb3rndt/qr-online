@@ -42,13 +42,18 @@ export function QRCodeRenderer({
 
   const downloadQrCode = useCallback(
     (ext: FileExtension) => {
-      if (!qrCode?._qr) {
-        toast.warning(
-          "Please enter data to generate the QR code before downloading."
-        );
-        return;
+      try {
+        if (!qrCode?._qr) {
+          toast.warning(
+            "Please enter data to generate the QR code before downloading."
+          );
+          return;
+        }
+        qrCode.download({ extension: ext });
+      } catch (e) {
+        console.log(e);
+        toast.error("An error occurred while downloading the QR code.");
       }
-      qrCode?.download({ extension: ext });
     },
     [qrCode]
   );
@@ -62,7 +67,7 @@ export function QRCodeRenderer({
   return (
     <Card
       className={cn(
-        "data-[shrinked=true]:w-full data-[shrinked=true]:rounded-none group data-[shrinked=true]:backdrop-blur-md data-[shrinked=true]:bg-background/80",
+        "data-[shrinked=true]:w-full data-[shrinked=true]:rounded-none group data-[shrinked=true]:backdrop-blur-md data-[shrinked=true]:bg-background/80 dotted-background inset-shadow-sm data-[shrinked=true]:py-4",
         className
       )}
       ref={ref}
@@ -73,17 +78,18 @@ export function QRCodeRenderer({
           "gap-6 group-data-[shrinked=true]:gap-2 flex not-group-data-[shrinked=true]:flex-col items-center group-data-[shrinked=true]:justify-center"
         )}
       >
-        <div className="p-4 bg-accent inset-shadow-sm rounded-md">
-          <div className="aspect-square flex items-center justify-center xs:size-[300px] size-[200px] group-data-[shrinked=true]:size-20">
-            <div
-              ref={qrCodeRef}
-              className={cn(
-                !options.data && "[&_canvas]:opacity-50",
-                "child-checkered-background flex items-center justify-center w-full h-full",
-                "[&_canvas]:max-w-full [&_canvas]:max-h-full [&_canvas]:mx-auto"
-              )}
-            />
-          </div>
+        <div
+          className="aspect-square flex items-center justify-center xs:size-[300px] size-[200px] group-data-[shrinked=true]:size-20"
+          id="test"
+        >
+          <div
+            ref={qrCodeRef}
+            className={cn(
+              !options.data && "[&_canvas]:opacity-50",
+              "child-checkered-background flex items-center justify-center w-full h-full",
+              "[&_canvas]:max-w-full [&_canvas]:max-h-full [&_canvas]:mx-auto"
+            )}
+          />
         </div>
         <QRCodeDownloadButton
           className="max-xs:w-full group-not-data-shrinked:w-full"
