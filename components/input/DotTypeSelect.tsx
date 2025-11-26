@@ -14,7 +14,10 @@ import { SquareDots } from "../svg/SquareDots";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export const DOT_TYPES = [
-  { type: "square", svg: <SquareDots className="size-7" /> },
+  {
+    type: "square",
+    svg: <SquareDots className="size-7" />,
+  },
   { type: "dots", svg: <Dots className="size-7" /> },
   { type: "rounded", svg: <RoundedDots className="size-7" /> },
   { type: "extra-rounded", svg: <ExtraRoundedDots className="size-7" /> },

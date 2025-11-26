@@ -47,7 +47,11 @@
 
   --dot-size: 1px; /* diameter of dots */
   --dot-spacing: 8px; /* distance between dots */
-  --dot-color: rgba(0, 0, 0, 0.15);
+  --dot-color: color-mix(
+    in oklch,
+    var(--muted-foreground) 20%,
+    oklch(0 0 0 / 0)
+  );
 }
 
 :root {

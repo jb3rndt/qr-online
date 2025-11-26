@@ -75,7 +75,7 @@ export function QRCodeRenderer({
     >
       <CardContent
         className={cn(
-          "gap-6 group-data-[shrinked=true]:gap-2 flex not-group-data-[shrinked=true]:flex-col items-center group-data-[shrinked=true]:justify-center"
+          "gap-6 group-data-[shrinked=true]:gap-4 flex not-group-data-[shrinked=true]:flex-col items-center group-data-[shrinked=true]:justify-center"
         )}
       >
         <div

@@ -25,51 +25,49 @@ export function ColorPickerInput({
   return (
     <div className="flex items-center justify-between">
       <Label>{label}</Label>
-      <div className="flex items-center gap-2">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-12 w-12 checkered-background p-0"
-            >
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="size-12 checkered-background p-0 border-none"
+          >
+            <div
+              className="size-full rounded-md border-none"
+              style={{ backgroundColor: value }}
+            />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-70 xs:w-96 p-0">
+          <ColorPicker
+            className="rounded-md bg-background p-4"
+            value={value}
+            onValueChange={(value) => {
+              onChange(Color.rgb(value).hexa());
+            }}
+          >
+            <ColorPickerSelection className="aspect-square" />
+            <div className="flex items-center gap-4">
               <div
-                className="h-12 w-12 -m-0.5 rounded-md"
+                className="size-10 border-none rounded-md shrink-0 checkered-background"
                 style={{ backgroundColor: value }}
-              />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-96 p-0">
-            <ColorPicker
-              className="rounded-md bg-background p-4"
-              value={value}
-              onValueChange={(value) => {
-                onChange(Color.rgb(value).hexa());
-              }}
-            >
-              <ColorPickerSelection className="aspect-square" />
-              <div className="flex items-center gap-4">
+              >
                 <div
-                  className="h-10 w-10 border rounded-md shrink-0 checkered-background"
+                  className="size-full rounded-md"
                   style={{ backgroundColor: value }}
-                >
-                  <div
-                    className="h-10 w-10 -m-0.5 rounded-md"
-                    style={{ backgroundColor: value }}
-                  />
-                </div>
-                <div className="grid w-full gap-1">
-                  <ColorPickerHue />
-                  <ColorPickerAlpha />
-                </div>
+                />
               </div>
-              <div className="flex items-center gap-2">
-                <ColorPickerOutput />
-                <ColorPickerFormat />
+              <div className="grid w-full gap-1">
+                <ColorPickerHue />
+                <ColorPickerAlpha />
               </div>
-            </ColorPicker>
-          </PopoverContent>
-        </Popover>
-      </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <ColorPickerOutput />
+              <ColorPickerFormat />
+            </div>
+          </ColorPicker>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
