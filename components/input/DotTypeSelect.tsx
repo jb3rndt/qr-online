@@ -1,37 +1,36 @@
-import ClassyDotsPreview from "@/public/classy-dots.svg";
-import ClassyRoundedDotsPreview from "@/public/classy-rounded-dots.svg";
-import DotCornerDot from "@/public/dot-corner-dot.svg";
-import DotCorner from "@/public/dot-corner.svg";
-import DefaultDotsPreview from "@/public/dots.svg";
-import ExtraRoundedCorner from "@/public/extra-rounded-corner.svg";
-import ExtraRoundedDotsPreview from "@/public/extra-rounded-dots.svg";
-import RoundedDotsPreview from "@/public/rounded-dots.svg";
-import SquareCornerDot from "@/public/square-corner-dot.svg";
-import SquareCorner from "@/public/square-corner.svg";
-import SquareDotsPreview from "@/public/square-dots.svg";
 import { Slash } from "lucide-react";
-import Image from "next/image";
 import { CornerDotType, CornerSquareType, DotType } from "qr-code-styling";
+import { ClassyDots } from "../svg/ClassyDots";
+import { ClassyRoundedDots } from "../svg/ClassyRoundedDots";
+import { DotCorner } from "../svg/DotCorner";
+import { DotCornerDot } from "../svg/DotCornerDot";
+import { Dots } from "../svg/Dots";
+import { ExtraRoundedCorner } from "../svg/ExtraRoundedCorner";
+import { ExtraRoundedDots } from "../svg/ExtraRoundedDots";
+import { RoundedDots } from "../svg/RoundedDots";
+import { SquareCorner } from "../svg/SquareCorner";
+import { SquareCornerDot } from "../svg/SquareCornerDot";
+import { SquareDots } from "../svg/SquareDots";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export const DOT_TYPES = [
-  { type: "square", svg: SquareDotsPreview },
-  { type: "dots", svg: DefaultDotsPreview },
-  { type: "rounded", svg: RoundedDotsPreview },
-  { type: "extra-rounded", svg: ExtraRoundedDotsPreview },
-  { type: "classy", svg: ClassyDotsPreview },
-  { type: "classy-rounded", svg: ClassyRoundedDotsPreview },
+  { type: "square", svg: <SquareDots className="size-7" /> },
+  { type: "dots", svg: <Dots className="size-7" /> },
+  { type: "rounded", svg: <RoundedDots className="size-7" /> },
+  { type: "extra-rounded", svg: <ExtraRoundedDots className="size-7" /> },
+  { type: "classy", svg: <ClassyDots className="size-7" /> },
+  { type: "classy-rounded", svg: <ClassyRoundedDots className="size-7" /> },
 ];
 
 export const CORNER_SQUARE_TYPES = [
-  { type: "square", svg: SquareCorner },
-  { type: "extra-rounded", svg: ExtraRoundedCorner },
-  { type: "dot", svg: DotCorner },
+  { type: "square", svg: <SquareCorner className="size-7" /> },
+  { type: "extra-rounded", svg: <ExtraRoundedCorner className="size-7" /> },
+  { type: "dot", svg: <DotCorner className="size-7" /> },
 ];
 
 export const CORNER_DOT_TYPES = [
-  { type: "square", svg: SquareCornerDot },
-  { type: "dot", svg: DotCornerDot },
+  { type: "square", svg: <SquareCornerDot className="size-7" /> },
+  { type: "dot", svg: <DotCornerDot className="size-7" /> },
 ];
 
 export function DotTypeSelect({
@@ -58,7 +57,7 @@ export function DotTypeSelect({
           value={option.type}
           className="w-12 h-12 px-1.5 data-[state=off]:opacity-50 data-[state=off]:hover:opacity-65"
         >
-          <Image src={option.svg} alt={option.type} />
+          {option.svg}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
@@ -95,7 +94,7 @@ export function CornerSquareTypeSelect({
           value={option.type}
           className="w-12 h-12 px-1.5 data-[state=off]:opacity-50 data-[state=off]:hover:opacity-65"
         >
-          <Image src={option.svg} alt={option.type} />
+          {option.svg}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
@@ -132,7 +131,7 @@ export function CornerDotTypeSelect({
           value={option.type}
           className="w-12 h-12 px-1.5 data-[state=off]:opacity-50 data-[state=off]:hover:opacity-65"
         >
-          <Image src={option.svg} alt={option.type} />
+          {option.svg}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
