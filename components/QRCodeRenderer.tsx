@@ -85,9 +85,9 @@ export function QRCodeRenderer({
           <div
             ref={qrCodeRef}
             className={cn(
-              !options.data && "[&_canvas]:opacity-50",
+              !options.data && "[&_svg]:opacity-50",
               "child-checkered-background flex items-center justify-center w-full h-full",
-              "[&_canvas]:max-w-full [&_canvas]:max-h-full [&_canvas]:mx-auto"
+              "[&_svg]:max-w-full [&_svg]:max-h-full [&_svg]:mx-auto"
             )}
           />
         </div>
